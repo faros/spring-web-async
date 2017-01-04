@@ -1,0 +1,85 @@
+<html lang="en">
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+<!-- Bootstrap -->
+<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+
+</head>
+
+<body>
+
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container">
+			<div class="navbar-header"></div>
+		</div>
+	</nav>
+
+	<div class="jumbotron">
+		<div class="container">
+			<h1>Spring MVC playground</h1>
+			<p>This application is a playground for Spring MVC features</p>
+		</div>
+	</div>
+
+	<div class="container">
+		<!-- Example row of columns -->
+		<div class="row">
+			<div class="col-md-4">
+				<h2>HTTP streaming</h2>
+				<p></p>
+				<p>
+					<a class="btn btn-default" href="/httpstreaming.html" role="button">View
+						details &raquo;</a>
+				</p>
+			</div>
+			<div class="col-md-4">
+				<h2>SSE (Server-sent Events)</h2>
+				<p>
+					SSE is a <a href="https://www.w3.org/TR/eventsource/">W3c
+						standard</a>. It is another variation of the <a
+						href="/httpstreaming.html">HTTP Streaming</a> technique, except
+					that, events pushed from the server are formatted according to the
+					W3C Server-Sent Events specification.
+				</p>
+				<p>
+					Spring's class <a
+						href="http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/web/servlet/mvc/method/annotation/SseEmitter.html">SseEmitter</a>
+					provides support of SSE.
+				</p>
+				<p>
+					<a class="btn btn-default" href="/sse.html" role="button">View
+						details &raquo;</a>
+				</p>
+			</div>
+			<div class="col-md-4">
+				<h2>Other</h2>
+				<p></p>
+				<p>
+					<a class="btn btn-default" href="#" role="button">View details
+						&raquo;</a>
+				</p>
+			</div>
+		</div>
+
+		<hr>
+
+		<footer>
+			<p>&copy; 2016 Faros NV</p>
+		</footer>
+	</div>
+
+
+	<!-- Placed at the end of the document so the pages load faster -->
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script src="/js/jquery-3.1.1.min.js"></script>
+
+	<!-- Include all compiled plugins (below), or include individual files as needed -->
+	<script src="/js/bootstrap.min.js"></script>
+</body>
+
+</html>

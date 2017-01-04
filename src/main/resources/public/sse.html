@@ -1,0 +1,179 @@
+<html lang="en">
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+<!-- Bootstrap -->
+<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+
+<script>
+	function sendRequest() {
+		if (typeof (EventSource) !== "undefined") {
+			var source = new EventSource("/httpStreamingWithSSE");
+			source.onmessage = function(event) {
+				document.getElementById("sseDiv").innerHTML += event.data
+						+ " - ";
+			};
+		} else {
+			document.getElementById("sseDiv").innerHTML = "Your browser does not support server-sent events.";
+		}
+	}
+</script>
+</head>
+
+<body>
+
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="/index.html">Back</a>
+			</div>
+		</div>
+	</nav>
+
+
+	<div class="jumbotron">
+		<div class="container">
+			<h1>Streaming With Server-Sent Events</h1>
+			<p>
+				SSE is a <a href="https://www.w3.org/TR/eventsource/">W3c
+					standard</a>. It is another variation of the <a
+					href="/httpstreaming.html">HTTP Streaming</a> technique, except
+				that, events pushed from the server are formatted according to the
+				W3C Server-Sent Events specification.
+			</p>
+			<a
+				href="https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events">Using
+				server-sent events</a>
+		</div>
+	</div>
+
+	<div class="container marketing">
+		<div class="row featurette">
+			<div class="col-md-12">
+				<h2 class="featurette-heading">Demo: Using Spring's SseEmitter</h2>
+				<p>Just like ResponseBodyEmitter, SseEmitter also uses an
+					HttpMessageConverter for conversion. Also it can be wrapped in
+					ResponseEntity.</p>
+				<p>SseEmitter is a subclass of ResponseBodyEmitter
+				</li> <a
+					href="http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/web/servlet/mvc/method/annotation/ResponseBodyEmitter.html">ResponseBodyEmitter
+					API (since Spring 4.2)</a>
+				</p>
+				<p>
+					<a href="/httpStreamingWithSSE"><button type="button"
+							class="btn btn-primary">/sseTest</button></a>
+					<code>SSEController.java /sseTest</code>
+				</p>
+			</div>
+		</div>
+
+		<hr class="featurette-divider">
+
+		<div class="row featurette">
+			<div class="col-md-7">
+				<h2 class="featurette-heading">Demo: Using SseEmitter with JavaScript
+				</h2>
+				<p>As SSE specification defines browser based scripting handling
+					as well, the real advantage of using SseEmitter can be seen when
+					used with JavaScript.</p>
+				<p>
+					The <a
+						href="https://developer.mozilla.org/en-US/docs/Web/API/EventSource"><b>EventSource</b></a>
+					interface is used to receive server-sent events. It connects to a
+					server over HTTP and receives events in text/event-stream format
+					without closing the connection
+				</p>
+				<p>
+					<a href="javascript:void" onclick="sendRequest()"><button
+							type="button" class="btn btn-primary">SseEmitter with
+							javascript</button></a>
+					<code>SSEController.java /sseTest</code>
+				</p>
+
+
+			</div>
+			<div class="col-md-5">
+				<div id="sseDiv" class="alert alert-success"></div>
+			</div>
+		</div>
+
+		<hr class="featurette-divider">
+
+		<div class="row featurette">
+			<div class="col-md-12">
+				<h2>Asynchronous Streaming Request Processing in Spring MVC 4.2
+					+</h2>
+				<div class="alert alert-info">
+					links:
+					<ul>
+						<li><a
+							href="http://shazsterblog.blogspot.be/2016/02/asynchronous-streaming-request.html">Async
+								streaming in Spring MVC 4.2+</a></li>
+						<li><a
+							href="http://www.logicbig.com/tutorials/spring-framework/spring-web-mvc/sse-emitter/">Spring
+								MVC - HTTP Streaming With Server-Sent Events</a></li>
+					</ul>
+				</div>
+				<p>With the release of Spring 4.2, 3 new classes have been
+					introduced to handle Requests Asynchronously of the Servlet Thread:
+
+
+
+				
+				<ul>
+					<li><a
+						href="http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/web/servlet/mvc/method/annotation/ResponseBodyEmitter.html">ResponseBodyEmitter</a>
+						<ul>
+							<li>A controller method return value type <b>for
+									asynchronous request processing</b> where <b>one or more
+									objects</b> are written to the response.
+							</li>
+							<li>While <b>DeferredResult</b> is used to produce <b>a
+									single result</b>, a ResponseBodyEmitter can be used to send
+								multiple objects where each object is written with a compatible
+								HttpMessageConverter.
+							</li>
+							<li>Supported as a return type on its own as well as within
+								a ResponseEntity.</li>
+						</ul>
+					<li><a
+						href="http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/web/servlet/mvc/method/annotation/SseEmitter.html">SseEmitter</a></li>
+					<ul>
+						<li>A specialization of ResponseBodyEmitter for sending
+							Server-Sent Events.</li>
+					</ul>
+					<li><a
+						href="http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/web/servlet/mvc/method/annotation/StreamingResponseBody.html">StreamingResponseBody</a></li>
+				</ul>
+				</p>
+
+				Example:
+				<pre>
+@RequestMapping(value="/stream", method=RequestMethod.GET)
+public ResponseBodyEmitter handle() { 
+	ResponseBodyEmitter emitter = new ResponseBodyEmitter(); // Pass the emitter to	another component... 
+	return emitter;
+}
+ 
+emitter.send(foo1); // in another thread 
+emitter.send(foo2);
+
+emitter.complete(); //and done
+					</pre>
+			</div>
+		</div>
+	</div>
+
+	<!-- Placed at the end of the document so the pages load faster -->
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script src="/js/jquery-3.1.1.min.js"></script>
+
+	<!-- Include all compiled plugins (below), or include individual files as needed -->
+	<script src="/js/bootstrap.min.js"></script>
+</body>
+
+</html>
