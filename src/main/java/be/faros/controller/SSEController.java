@@ -14,17 +14,9 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 public class SSEController {
 
 	/*
-	 * Servlet 3, Async Support
-	 * https://spring.io/blog/2012/05/07/spring-mvc-3-2-preview-introducing-
-	 * servlet-3-async-support
-	 */
-
-	/*
-	 * http://www.logicbig.com/tutorials/spring-framework/spring-web-mvc/http_streaming/
-	 * 
 	 * Returns ResponseBodyEmitter can be used for HTTP Streaming
 	 * 
-	 * Voorloper van reactive programming ? Heeft error handling & onComplete zoals observer/reactive programming
+	 * Voorloper van reactive programming? Heeft error handling & onComplete zoals observer/reactive programming
 	 */
 	@RequestMapping("/httpstreaming")
 	public ResponseBodyEmitter httpStreaming() {
